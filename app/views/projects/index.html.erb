@@ -1,31 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div style="float: right;"><%= (link_to 'Nuevo Proyecto', new_project_path, :class => "btn btn-sm btn-primary", :style => "color:white;") %></div>
+</div>
+<div class="row">
+  <% @projects.each_with_index do |project, index| %>
+    <div class="col-md-4 portfolio-item" style="background-color:white; ">
+      <div class="counter-number" style="font-size: 50px; text-align:center; margin-top: 0.5cm;"><%= image_tag("http://www.enactusutm.org/images/kuili.png") %></div>
+      <h3><%= project.name.to_s %></h3>
+      <small>
+        <%= link_to 'Mostrar', project_path(project) %> | 
+        <%= link_to 'Editar', edit_project_path(project) %> | 
+        <%= link_to 'Borrar', project, method: :delete, data: { confirm: 'Esta acción no se puede deshacer. ¿Está seguro de querer borrar el projecto?' } %>
+      </small>
 
-<h1>Listing Projects</h1>
+      <p>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Manager</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Líder</td>
+              <td><%= project.leader.full_name %></td>
+            </tr>
+            <tr>
+              <td>Colaboradores</td>
+              <td><%= project.colaborators.size %></td>
+            </tr>
+            <tr>
+              <!-- <td>Descripción</td> -->
+              <td colspan="2"><%= project.description %></td>
+            </tr>
+          </tbody>
+        </table>
+      </p>
 
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr>
-        <td><%= project.name %></td>
-        <td><%= project.description %></td>
-        <td><%= project.manager_id %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Project', new_project_path %>
+    </div>
+  <% end %>
+</div>

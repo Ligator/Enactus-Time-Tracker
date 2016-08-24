@@ -24,4 +24,7 @@ class User < ActiveRecord::Base
     Project.exists?(manager_id: id)
   end
 
+  def full_name
+    [fname, lname1, lname2] * " "
+  end
 end
