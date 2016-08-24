@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @hour_record.activity %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @hour_record.user %>
+</p>
+
+<p>
+  <strong>Worked hours:</strong>
+  <%= @hour_record.worked_hours %>
+</p>
+
+<p>
+  <strong>Worked date:</strong>
+  <%= @hour_record.worked_date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @hour_record.description %>
+</p>
+
+<%= link_to 'Edit', edit_hour_record_path(@hour_record) %> |
+<%= link_to 'Back', hour_records_path %>

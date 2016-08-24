@@ -1,0 +1,1 @@
+json.array! @hour_records, partial: 'hour_records/hour_record', as: :hour_record

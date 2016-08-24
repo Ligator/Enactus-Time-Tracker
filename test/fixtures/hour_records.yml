@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  activity_id: 
+  user_id: 
+  worked_hours: 2016-08-21 23:37:40
+  worked_date: 2016-08-21
+  description: MyText
+
+two:
+  activity_id: 
+  user_id: 
+  worked_hours: 2016-08-21 23:37:40
+  worked_date: 2016-08-21
+  description: MyText

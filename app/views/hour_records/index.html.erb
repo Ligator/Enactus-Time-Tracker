@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Hour Records</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th>User</th>
+      <th>Worked hours</th>
+      <th>Worked date</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hour_records.each do |hour_record| %>
+      <tr>
+        <td><%= hour_record.activity %></td>
+        <td><%= hour_record.user %></td>
+        <td><%= hour_record.worked_hours %></td>
+        <td><%= hour_record.worked_date %></td>
+        <td><%= hour_record.description %></td>
+        <td><%= link_to 'Show', hour_record %></td>
+        <td><%= link_to 'Edit', edit_hour_record_path(hour_record) %></td>
+        <td><%= link_to 'Destroy', hour_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hour record', new_hour_record_path %>
