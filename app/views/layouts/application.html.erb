@@ -26,11 +26,12 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <% if current_user.admin? %>
-            <li><a href="/projects">Proyectos<span class="sr-only">(current)</span></a></li>
-            <li><a href="/hour_records">Registro de horas</a></li>
+            <li><%= link_to "Proyectos", projects_path %></li>
+            <li><%= link_to "Enacters", all_enacters_path %></li>
           <% elsif current_user.leader? %>
-            <li><a href="/activities">Actividades<span class="sr-only">(current)</span></a></li>
+            <li><%= link_to "Actividades", activities_path %></li>
           <% end %>
+          <li><%= link_to "Registro de horas", hour_records_path %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= current_user.email %><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">

@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :activities
   resources :projects
+
+  get "all_enacters" => 'projects#users', as: :all_enacters
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
