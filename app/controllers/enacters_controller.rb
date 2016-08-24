@@ -23,7 +23,7 @@ class EnactersController < ApplicationController
   def update
     respond_to do |format|
       if @enacter.update(enacter_params)
-        format.html { redirect_to enacters_path, notice: 'Project was successfully updated.' }
+        format.html { redirect_to enacters_path, notice: 'Los datos del usuario se han actualizado correctamente.' }
         format.json { render :show, status: :ok, location: enacters_path }
       else
         format.html { render :edit }
