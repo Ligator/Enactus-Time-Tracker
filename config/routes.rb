@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'enacters/:id' => 'enacters#show', as: :enacter
   post 'enacters/send_invitation' => 'enacters#send_invitation'
   get 'enacters/:id/edit' => 'enacters#edit', as: :edit_enacter
+  put 'enacters/update_positions' => 'enacters#update_positions'
   put 'enacters/:id' => 'enacters#update'
   delete 'enacters/:id' => 'enacters#destroy'
 

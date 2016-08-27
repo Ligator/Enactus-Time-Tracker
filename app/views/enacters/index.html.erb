@@ -1,2 +1,62 @@
-<h1>Enacters#index</h1>
-<p>Find me in app/views/enacters/index.html.erb</p>
+
+<h2>
+  Enacters
+  <%= link_to "Invitar enacters", "#", class: "btn btn-primary", style: "float:right" %>
+</h2><br>
+
+<% if @edit_mode %>
+  <%= link_to "Cancel", enacters_path, class: "btn btn-default", style: "float:right" %>
+  <%= form_tag url_for(:controller => 'enacters', :action => 'update_positions'), :method => 'put' do %>
+    <%= submit_tag "Guardar", data: { disable_with: "Guardando cambios..." }, class: "btn btn-default", style: "float:right" %> &nbsp;&nbsp;
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Apellidos</th>
+          <th>Nombre(s)</th>
+          <th>Email</th>
+          <th>Proyecto</th>
+          <th>Posición</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @enacters.each do |enacter| %>
+          <tr>
+            <td><%= enacter.lname %></td>
+            <td><%= enacter.fname %></td>
+            <td><%= enacter.email %></td>
+            <td><%= select_tag "project_id_#{enacter.id}", options_from_collection_for_select(@projects, "id", "name", enacter.project_id), include_blank: "Ninguno", class: "form-control" %></td>
+            <td><%= select_tag "position_#{enacter.id}", options_for_select(@positions_array, enacter.position), include_blank: "Ninguno", class: "form-control" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+<% else %>
+  <%= link_to "Editar asignaciones", enacters_path(mode: "edit"), class: "btn btn-default", style: "float:right" %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Apellidos</th>
+        <th>Nombre(s)</th>
+        <th>Email</th>
+        <th>Proyecto</th>
+        <th>Posición</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @enacters.each do |enacter| %>
+        <tr>
+          <td><%= enacter.lname %></td>
+          <td><%= enacter.fname %></td>
+          <td><%= enacter.email %></td>
+          <td><%= enacter.project.name if enacter.project %></td>
+          <td><%= enacter.position_sentence %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

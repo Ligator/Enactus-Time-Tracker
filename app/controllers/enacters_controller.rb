@@ -4,7 +4,11 @@ class EnactersController < ApplicationController
 
   def index
     @enacters = User.order(:lname1, :lname2, :fname)
-    # @enacters = User.all(order: "lname1, lname2, fname")
+    if params[:mode] == "edit"
+      @edit_mode = true
+      @projects = Project.all
+      @positions_array = User::POSITIONS.invert.to_a
+    end
   end
 
   def show
@@ -18,6 +22,13 @@ class EnactersController < ApplicationController
   end
 
   def edit
+  end
+
+  def update_positions
+    respond_to do |format|
+      format.html { redirect_to enacters_url, notice: "Se han guardado los cambios." }
+      format.json { head :no_content }
+    end
   end
 
   def update
