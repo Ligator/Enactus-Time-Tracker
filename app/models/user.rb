@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  belongs_to :project
+
   MAJORS = {
     0 => "Ingeniería Mecatrónica",
     1 => "Ingeniería en Alimentos",
@@ -16,6 +18,16 @@ class User < ActiveRecord::Base
     8 => "Ingeniería en Electrónica",
   }
 
+  POSITIONS = {
+    "president"       => "Presidente",
+    "vicepresident"   => "Vice presidente",
+    "coach"           => "Consejero",
+    "human_resources" => "Recursos Humanos",
+    "system_manager"  => "Administrador de sistema",
+    "project_leader"  => "Líder de Proyecto",
+    "colaborator"     => "Colaborador",
+  }
+
   def admin?
     %w[president vicepresident coach human_resources system_manager].include? position
   end
@@ -26,5 +38,13 @@ class User < ActiveRecord::Base
 
   def full_name
     [fname, lname1, lname2] * " "
+  end
+
+  def lname
+    [lname1, lname2] * " "
+  end
+
+  def position_sentence
+    POSITIONS[position]
   end
 end
