@@ -29,15 +29,15 @@
   <div class="form-group row">
     <%= f.label :major, "Carrera", class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%= f.select :major, options_for_select(User::MAJORS.invert.to_a), { include_blank: "Ninguno" }, { class: "form-control" }%>
+      <%= f.select :major, options_for_select(User::MAJORS.invert.to_a, current_user.major), { include_blank: "Ninguno" }, { class: "form-control" }%>
     </div>
   </div>
 
   <div class="form-group row">
     <%= f.label :semester, "Semestre", class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%#= select_tag :semester, options_for_select([[User::MAJORS.invert.to_a]]), include_blank: "Ninguno", class: "form-control" %>
-      <%= f.text_field :semester, class: "form-control" %>
+      <%= f.select :semester, options_for_select((1..10).map(&:to_s), current_user.semester), { include_blank: "Ninguno" }, { class: "form-control" }%>
+      <%#= f.text_field :semester, class: "form-control" %>
     </div>
   </div>
 
@@ -51,7 +51,7 @@
   <div class="form-group row">
     <%= f.label :cellphone, "Teléfono celular", class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%= f.text_field :cellphone, class: "form-control" %>
+      <%= f.telephone_field :cellphone, class: "form-control" %>
     </div>
   </div>
 
@@ -65,7 +65,7 @@
   <div class="form-group row">
     <%= f.label :birthday, "Fecha de nacimiento", class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%= f.text_field :birthday, class: "form-control" %>
+      <%= f.text_field :birthday, value: current_user.birthday.strftime("%e %B, %Y"), class: "form-control" %>
     </div>
   </div>
 
