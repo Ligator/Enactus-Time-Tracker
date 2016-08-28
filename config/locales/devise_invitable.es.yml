@@ -1,10 +1,14 @@
 es:
   devise:
+    failure:
+      invited: "Tienes una invitación pendiente. Para terminar de crear tu cuenta, debes acceptar la invitación."
     invitations:
       send_instructions: "Una invitación se ha enviado por correo a %{email}."
-      invitation_token_invalid: "El token de invitación no es valido!"
+      invitation_token_invalid: "¡El token de invitación no es válido!"
       updated: "Tu contraseña se ha capturado con éxito, ya te encuentras dentro del sistema."
+      updated_not_active: "Tu contraseña se ha capturado con éxito."
       no_invitations_remaining: "No quedan más invitaciones"
+      invitation_removed: "Tu invitación fue cancelada."
       new:
         header: "Enviar Invitación"
         submit_button: "Envía una invitación"
@@ -14,3 +18,14 @@ es:
     mailer:
       invitation_instructions:
         subject: "Instruciones de la invitación"
+        hello: "¡Saludos Enacter!"
+        someone_invited_you: "Esta es una invitación a nuestro sistema de control de horas, en la cual podrás registrar cada una de las tareas que realices, así como el tiempo que hayas invertido en ellas. Solo da click en 'Aceptar invitación' y configura tu contraseña."
+        accept: "Aceptar invitación"
+        accept_until: "Invitación válida hasta %{due_date}."
+        ignore: "Si no deseas aceptar esta invitación, por favor ignora este email.<br />Tu cuenta no será creada hasta que hagas click en el link de arriba y configures tu contraseña."
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%B %d, %Y %I:%M %p"
