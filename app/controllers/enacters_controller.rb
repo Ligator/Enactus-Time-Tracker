@@ -43,18 +43,24 @@ class EnactersController < ApplicationController
     @invalid_emails = get_invalid_emails(email_list)
 
     respond_to do |format|
-      if @invalid_emails.any?
+      if email_list.strip.blank?
+        flash[:error] = "Debes introducir al menos una dirección de correo electrónico."
+        format.html { redirect_to invite_enacters_path }
+        format.json { head :no_content }
+      elsif @invalid_emails.any?
         flash[:error] = "Las invitaciones no se enviaron porque hay #{@invalid_emails.size} correos no válidos: #{@invalid_emails.to_sentence}".html_safe
         format.html { redirect_to invite_enacters_path(email_list: email_list) }
         format.json { head :no_content }
       else
-        send_invitations_to_all_emails(email_list)
-        if email_list.lines.size == 1
-          notice_message = "Se ha enviado la invitación a #{email_list}."
+        valid_emails = send_invitations_to_all_emails(email_list)
+        if valid_emails.blank?
+          flash[:error] = "Todos los correos pertenecen a usuarios activos del sistema."
+        elsif valid_emails.size == 1
+          flash[:notice] = "Se ha enviado la invitación a #{valid_emails.first}."
         else
-          notice_message = "Se ha enviado la invitación a todos los usuarios."
+          flash[:notice] = "Se ha enviado la invitación a #{valid_emails.size} usuarios."
         end
-        format.html { redirect_to enacters_url, notice: notice_message }
+        format.html { redirect_to enacters_url }
         format.json { head :no_content }
       end
     end
@@ -124,6 +130,7 @@ class EnactersController < ApplicationController
       next if users_email.include? email
       User.invite!(email: email, position: "colaborator")
     end
+    email_list.lines - users_email
   end
 
   def set_enacter
