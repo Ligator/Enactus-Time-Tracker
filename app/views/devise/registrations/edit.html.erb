@@ -1,43 +1,126 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<div class="">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
+  <fieldset>
+  <legend>Actualizar mis datos</legend>
   <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+  <div class="form-group row">
+    <%= f.label :fname, "Nombre", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :fname, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :lname1, "Apellido paterno", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :lname1, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :lname2, "Apellido materno", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :lname2, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :major, "Carrera", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :major, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :semester, "Semestre", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :semester, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :group, "Grupo", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :group, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :cellphone, "Teléfono celular", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :cellphone, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :enrollment, "Matrícula", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :enrollment, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :birthday, "Fecha de nacimiento", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :birthday, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :email, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= current_user.email %></p>
+    </div>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <div>Esperando confirmación del correo: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
+  <div class="form-group row">
+    <%= f.label :password, "Constraseña", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password" %>
+      <% if @minimum_password_length %>
+        <span class="help-block"><%= @minimum_password_length %> caracteres como mínimo</span>
+      <% end %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  <div class="form-group row">
+    <%= f.label :password_confirmation, "Confirmar Constraseña", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Password" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
+  <div class="form-group row">
+    <%= f.label :current_password, "Constraseña Actual", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
+      <span class="help-block">(requerido para confirmar los cambios)</span>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+  <div class="row">
+    <div class="text-right">
+      <%= f.submit "Guardar cambios", data: { disable_with: "Guardando..." }, class: "btn btn-primary" %>
+    </div>
   </div>
+  </fieldset>
 <% end %>
-
+</div>
+<!--
 <h3>Cancel my account</h3>
 
 <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
 <%= link_to "Back", :back %>
+ -->
+
+<script type="text/javascript">
+  $(function () {
+    $('#user_birthday').datetimepicker();
+  });
+</script>
