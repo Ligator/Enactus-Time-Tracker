@@ -2,8 +2,8 @@
 
 <% if @edit_mode %>
   <%= form_tag url_for(:controller => 'enacters', :action => 'update_positions'), :method => 'put' do %>
-    <%= link_to "Cancel", enacters_path, class: "btn btn-default", style: "float:right" %>
-    <%= submit_tag "Guardar", data: { disable_with: "Guardando cambios..." }, class: "btn btn-default", style: "float:right" %> &nbsp;&nbsp;
+    <%= link_to "Cancelar", enacters_path, class: "btn btn-default", style: "float:right" %>
+    <%= submit_tag "Guardar cambios", data: { disable_with: "Guardando cambios..." }, class: "btn btn-primary", style: "float:right" %> &nbsp;&nbsp;
 
     <%= render partial: "table_all_enacters_edit", locals: { all_enacters: @enacters + @free_enacters } %>
 
