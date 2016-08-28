@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-offset-3 col-md-6">
+    <div class="well">
+      <legend><h2><%= t 'devise.invitations.edit.header' %></h2></legend>
+
+			<%= form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put } do |f| %>
+        <%= devise_error_messages! %>
+  			<%= f.hidden_field :invitation_token %>
+
+  			<% if f.object.class.require_password_on_accepting %>
+	        <div class="form-group">
+	          <%= f.label :password, "Contraseña" %>
+	          <%= f.password_field :password, autofocus: true, autocomplete: "off", class: "form-control" %>
+	          <% if @minimum_password_length %>
+	            <span class="help-block"><%= @minimum_password_length %> caracteres como mínimo</span>
+	          <% end %>
+	        </div>
+
+	        <div class="form-group">
+	          <%= f.label :password_confirmation, "Confirma tu contraseña" %>
+	          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+	        </div>
+			  <% end %>
+
+        <div class="row">
+          <div class="text-right">
+            <%= f.submit t("devise.invitations.edit.submit_button"), class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
