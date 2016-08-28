@@ -29,6 +29,7 @@ gem "font-awesome-rails"
 gem 'devise'
 gem 'devise_invitable'
 gem 'email_validator', require: false
+gem 'jquery-ui-rails'
 # gem 'devise-i18n'
 # gem 'rails-i18n'
 # gem 'bootstrap-sass'
