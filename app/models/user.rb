@@ -12,15 +12,16 @@ class User < ActiveRecord::Base
   scope :unconfirmed,     -> { where("invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL") }
 
   MAJORS = {
-    0 => "Ingeniería Mecatrónica",
-    1 => "Ingeniería en Alimentos",
-    2 => "Licenciatura en Ciencias Empresariales",
-    3 => "Licenciatura en Matemáticas Aplicadas",
-    4 => "Ingeniería Industrial",
-    5 => "Ingeniería en Diseño",
-    6 => "Ingeniería Mecánica Automotriz",
-    7 => "Ingeniería en Computación",
-    8 => "Ingeniería en Electrónica",
+    "0" => "Licenciatura en Ciencias Empresariales",
+    "1" => "Licenciatura en Matemáticas Aplicadas",
+    "2" => "Licenciatura en Física Aplicada",
+    "3" => "Ingeniería Mecatrónica",
+    "4" => "Ingeniería Industrial",
+    "5" => "Ingeniería en Diseño",
+    "6" => "Ingeniería Mecánica Automotriz",
+    "7" => "Ingeniería en Computación",
+    "8" => "Ingeniería en Electrónica",
+    "9" => "Ingeniería en Alimentos",
   }
 
   POSITIONS = {
@@ -52,5 +53,9 @@ class User < ActiveRecord::Base
 
   def position_title
     POSITIONS[position]
+  end
+
+  def major_title
+    MAJORS[position]
   end
 end
