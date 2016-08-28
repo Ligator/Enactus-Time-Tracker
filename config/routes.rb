@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
+
+  get 'invite_enacters' => 'enacters#invite_enacters', as: :invite_enacters
+  post 'enacters/send_invitation' => 'enacters#send_invitation'
+  put 'enacters/update_positions' => 'enacters#update_positions'
+
   get 'enacters' => 'enacters#index', as: :enacters
   get 'enacters/:id' => 'enacters#show', as: :enacter
-  post 'enacters/send_invitation' => 'enacters#send_invitation'
   get 'enacters/:id/edit' => 'enacters#edit', as: :edit_enacter
-  put 'enacters/update_positions' => 'enacters#update_positions'
   put 'enacters/:id' => 'enacters#update'
-  delete 'enacters/:id' => 'enacters#destroy'
+  delete 'enacters/:id' => 'enacters#destroy', as: :delete_enacter
 
   get 'users/sign_up' => redirect('/')
 
