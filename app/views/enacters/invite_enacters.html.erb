@@ -13,9 +13,9 @@
                             placeholder: "email_1@example.com\nemail_2@example.com\nemail_3@example.com\n..." %>
         </div>
         <div class="row">
-          <div class="col-md-offset-4 col-md-8">
-            <%= link_to "Cancelar", enacters_path, class: "btn btn-default", style: "float:right" %>
-            <%= submit_tag "Enviar invitaciones", data: { disable_with: "Enviando..." }, class: "btn btn-primary", style: "float:right" %>
+          <div class="text-right">
+            <%= submit_tag "Enviar invitaciones", data: { disable_with: "Enviando..." }, class: "btn btn-primary" %>
+            <%= link_to "Cancelar", enacters_path, class: "btn btn-default" %>
           </div>
         </div>
       <% end %>
