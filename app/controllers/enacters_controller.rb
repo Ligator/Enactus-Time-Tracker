@@ -1,23 +1,62 @@
 class EnactersController < ApplicationController
-  before_filter :check_premission
+  before_filter :check_admin_premission
+  # before_filter :check_leader_premission
   before_action :set_enacter, only: [:show, :edit, :update, :destroy]
 
   def index
-    @enacters = User.order(:lname1, :lname2, :fname)
-    if params[:mode] == "edit"
+    if current_user.leader?
+      @enacters = User.with_project.
+                  where(project_id: current_user.project_id).
+                  order(:lname1, :lname2, :fname)
+
+      @users_invited = []
+    elsif current_user.admin?
+      @enacters = User.with_project.
+                  order(:project_id, :lname1, :lname2, :fname)
+
+      @users_invited = User.unconfirmed.
+                       order(:lname1, :lname2, :fname)
+    end
+
+    @free_enacters = User.without_project.
+                     order(:lname1, :lname2, :fname)
+
+    if params[:mode] == "edit" and current_user.admin?
       @edit_mode = true
       @projects = Project.all
       @positions_array = User::POSITIONS.invert.to_a
     end
   end
 
+  def index_for_leaders
+  end
+
   def show
   end
 
+  def invite_enacters
+    @all_emails = params[:email_list]
+  end
+
   def send_invitation
+    email_list = params[:email_list]
+    @invalid_emails = get_invalid_emails(email_list)
+
     respond_to do |format|
-      format.html { redirect_to enacters_url, notice: 'Se ha enviado la invitación al usuario.' }
-      format.json { head :no_content }
+      if @invalid_emails.any?
+        flash[:error] = "Las invitaciones no se enviaron porque hay #{@invalid_emails.size} correos no válidos: #{@invalid_emails.to_sentence}".html_safe
+        format.html { redirect_to invite_enacters_path(email_list: email_list) }
+        format.json { head :no_content }
+      else
+        send_invitations_to_all_emails(email_list)
+        if email_list.lines.size == 1
+          notice_message = "Se ha enviado la invitación a #{email_list}."
+        else
+          notice_message = "Se ha enviado la invitación a todos los usuarios."
+        end
+        format.html { redirect_to enacters_url, notice: notice_message }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -25,6 +64,23 @@ class EnactersController < ApplicationController
   end
 
   def update_positions
+    user_attributes = {}
+    user_project = params[:project_id] || {}
+    user_position = params[:position] || {}
+
+    user_project.each do |user_id, project_id|
+      user_attributes[user_id] = { project_id: project_id }
+    end
+
+    user_position.each do |user_id, position|
+      user_attributes[user_id] ||= {}
+      user_attributes[user_id][:position] = position
+    end
+
+    user_attributes.each do |user_id, attributes|
+      User.find(user_id).update_attributes(attributes)
+    end
+
     respond_to do |format|
       format.html { redirect_to enacters_url, notice: "Se han guardado los cambios." }
       format.json { head :no_content }
@@ -53,6 +109,23 @@ class EnactersController < ApplicationController
 
   private
 
+  def get_invalid_emails(email_list)
+    require "email_validator"
+    invalid_emails = []
+    email_list.each_line do |email|
+      invalid_emails << email.strip unless EmailValidator.valid?(email)
+    end
+    invalid_emails
+  end
+
+  def send_invitations_to_all_emails(email_list)
+    users_email = User.confirmed.where(email: email_list.lines).pluck(:email)
+    email_list.each_line do |email|
+      next if users_email.include? email
+      User.invite!(email: email, position: "colaborator")
+    end
+  end
+
   def set_enacter
     @enacter = User.find(params[:id])
   end
@@ -62,8 +135,14 @@ class EnactersController < ApplicationController
     # params.require(:user).permit(:name, :description, :manager_id)
   end
 
-  def check_premission
+  def check_admin_premission
     unless (current_user and current_user.admin?) or (current_user and current_user.id == params[:id])
+      redirect_to :root
+    end
+  end
+
+  def check_leader_premission
+    unless (current_user and current_user.leader?) or (current_user and current_user.id == params[:id])
       redirect_to :root
     end
   end
