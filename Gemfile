@@ -28,7 +28,8 @@ gem "font-awesome-rails"
 
 gem 'devise'
 gem 'devise_invitable'
-gem 'bootstrap-sass'
+gem 'email_validator', require: false
+# gem 'bootstrap-sass'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
