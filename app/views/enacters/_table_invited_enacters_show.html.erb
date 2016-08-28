@@ -1,0 +1,20 @@
+<h3>Enacters pendientes por aceptar la invitación</h3><br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Fecha de invitación</th>
+      <th>Email</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% invited_enacters.each do |enacter| %>
+      <tr>
+        <td><%= enacter.invitation_sent_at.to_formatted_s(:long) %></td>
+        <td><%= enacter.email %></td>
+        <td><%= link_to "Volver a enviar invitación", "/enacters/send_invitation?email_list=#{enacter.email}", method: :post, class: "btn btn-default" %>
+        <%= link_to "Cancelar invitación", delete_enacter_path(enacter), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

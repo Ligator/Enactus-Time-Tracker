@@ -1,62 +1,20 @@
-
-<h2>
-  Enacters
-  <%= link_to "Invitar enacters", "#", class: "btn btn-primary", style: "float:right" %>
-</h2><br>
+<h2>Enacters</h2>
 
 <% if @edit_mode %>
-  <%= link_to "Cancel", enacters_path, class: "btn btn-default", style: "float:right" %>
   <%= form_tag url_for(:controller => 'enacters', :action => 'update_positions'), :method => 'put' do %>
+    <%= link_to "Cancel", enacters_path, class: "btn btn-default", style: "float:right" %>
     <%= submit_tag "Guardar", data: { disable_with: "Guardando cambios..." }, class: "btn btn-default", style: "float:right" %> &nbsp;&nbsp;
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Apellidos</th>
-          <th>Nombre(s)</th>
-          <th>Email</th>
-          <th>Proyecto</th>
-          <th>Posición</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @enacters.each do |enacter| %>
-          <tr>
-            <td><%= enacter.lname %></td>
-            <td><%= enacter.fname %></td>
-            <td><%= enacter.email %></td>
-            <td><%= select_tag "project_id_#{enacter.id}", options_from_collection_for_select(@projects, "id", "name", enacter.project_id), include_blank: "Ninguno", class: "form-control" %></td>
-            <td><%= select_tag "position_#{enacter.id}", options_for_select(@positions_array, enacter.position), include_blank: "Ninguno", class: "form-control" %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+
+    <%= render partial: "table_all_enacters_edit", locals: { all_enacters: @enacters + @free_enacters } %>
+
   <% end %>
 
 <% else %>
   <%= link_to "Editar asignaciones", enacters_path(mode: "edit"), class: "btn btn-default", style: "float:right" %>
+  <%= render partial: "table_all_enacters_show", locals: { all_enacters: @enacters + @free_enacters } %>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Apellidos</th>
-        <th>Nombre(s)</th>
-        <th>Email</th>
-        <th>Proyecto</th>
-        <th>Posición</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @enacters.each do |enacter| %>
-        <tr>
-          <td><%= enacter.lname %></td>
-          <td><%= enacter.fname %></td>
-          <td><%= enacter.email %></td>
-          <td><%= enacter.project.name if enacter.project %></td>
-          <td><%= enacter.position_sentence %></td>
-          <td></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <br><br><%= link_to "Invitar enacters", invite_enacters_path, class: "btn btn-primary", style: "float:right" %>
+  <% if @users_invited.any? %>
+    <%= render partial: "table_invited_enacters_show", locals: { invited_enacters: @users_invited } %>
+  <% end %>
 <% end %>

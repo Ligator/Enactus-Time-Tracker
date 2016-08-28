@@ -1,0 +1,24 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Apellidos</th>
+      <th>Nombre(s)</th>
+      <th>Email</th>
+      <th>Proyecto</th>
+      <th>Posición</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% all_enacters.each do |enacter| %>
+      <tr>
+        <td><%= enacter.lname %></td>
+        <td><%= enacter.fname %></td>
+        <td><%= enacter.email %></td>
+        <td><%= enacter.project.name if enacter.project %></td>
+        <td><%= enacter.position_title %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
