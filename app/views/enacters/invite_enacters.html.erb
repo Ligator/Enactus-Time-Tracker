@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-offset-3 col-md-6">
+    <div class="well">
+      <legend><h2>Invitar por Email</h2></legend>
+      <p>Introduce las direcciones de correo electrónico de cada enacter que desees invitar, un correo por línea.</p>
+
+      <%= form_tag url_for(controller: "enacters", action: "send_invitation"), method: "post" do %>
+        <div class="form-group">
+          <%= text_area_tag "email_list",
+                            @all_emails,
+                            rows: "10",
+                            class: "form-control",
+                            placeholder: "email_1@example.com\nemail_2@example.com\nemail_3@example.com\n..." %>
+        </div>
+        <div class="row">
+          <div class="col-md-offset-8 col-md-4">
+            <%= submit_tag "Enviar invitaciones", data: { disable_with: "Enviando..." }, class: "form-control btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
