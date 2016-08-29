@@ -100,6 +100,3 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
-export GMAIL_EMAIL="pachecos.corp@gmail.com"
-export GMAIL_PASSWORD="ligator123456"
-
