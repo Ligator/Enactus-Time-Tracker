@@ -76,6 +76,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
+
   # config.action_mailer.delivery_method = :sendmail
   # # Defaults to:
   # # config.action_mailer.sendmail_settings = {
