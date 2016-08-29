@@ -1,31 +1,17 @@
-<p id="notice"><%= notice %></p>
+<% if current_user.leader? %>
+  <div class="text-right">
+    <%= link_to "Nueva Actividad", new_activity_path, class: "btn btn-primary" %>
+  </div>
 
-<h1>Listing Activities</h1>
+  <%= render partial: "table_activities_for_project", locals: { activities: @activities.values.first, project_name: (@project ? @project.name : nil) } %>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Project</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @activities.each do |activity| %>
-      <tr>
-        <td><%= activity.name %></td>
-        <td><%= activity.description %></td>
-        <td><%= activity.project %></td>
-        <td><%= link_to 'Show', activity %></td>
-        <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if current_user.admin? %>
+  <% @activities.each do |projec_id, activities| %>
+    <br>
+    <%= render partial: "table_activities_for_project", locals: { activities: activities, project_name: @project_names[projec_id] } %>
+  <% end %>
+<% end %>
 
 <br>
 
-<%= link_to 'New Activity', new_activity_path %>

@@ -1,0 +1,24 @@
+<legend>Actividades <%= " de " + project_name if project_name %></legend>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Horas</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% activities.each do |activity| %>
+      <tr>
+        <td><%= activity.name %></td>
+        <td><%= activity.description %></td>
+        <td><%= @hours_per_activity[activity.id].to_f %></td>
+        <td><%= link_to 'Editar', edit_activity_path(activity) %></td>
+        <td><%= link_to 'Eliminar', activity, method: :delete, data: { confirm: "¿Seguro que desea eliminar esta actividad?" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
