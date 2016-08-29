@@ -50,6 +50,8 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem "letter_opener"
+  gem 'pry-nav'
+  gem "awesome_print"    # Pretty print your Ruby objects with style -- in full color and with proper indentation
 end
 
 group :development do
@@ -58,7 +60,6 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem "awesome_print"    # Pretty print your Ruby objects with style -- in full color and with proper indentation
 end
 
 group :production do
