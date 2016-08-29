@@ -2,11 +2,11 @@ class Project < ActiveRecord::Base
   has_many :users
   has_many :activities
 
-  def leader
-    User.find(manager_id)
+  def leaders
+    User.where(project_id: id, position: "project_leader")
   end
 
   def colaborators
-    User.where(project_id: id)
+    User.where(project_id: id, position: "colaborator")
   end
 end
