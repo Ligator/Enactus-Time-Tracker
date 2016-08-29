@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   protected
     def configure_permitted_parameters
-       devise_parameter_sanitizer.permit(:account_update, keys: [:fname, :lname1, :lname2, :major, :semester, :group, :cellphone, :enrollment, :birthday])
+    	allowed_fields = [:fname, :lname1, :lname2, :major, :semester, :group, :cellphone, :enrollment, :birthday]
+      devise_parameter_sanitizer.permit(:account_update, keys: allowed_fields)
     end
 end
