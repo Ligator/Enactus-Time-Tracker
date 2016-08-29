@@ -19,6 +19,10 @@
     <%= f.label :description, "Descripción" %><br>
     <%= f.text_area :description, class: "form-control" %>
   </div>
+  <div class="form-group">
+    <%= f.label :image_url, "URL del logo" %><br>
+    <%= f.text_field :image_url, class: "form-control" %>
+  </div>
   <div class="row">
     <div class="text-right">
       <%= f.submit "Crear/Actualizar Proyecto", class: "btn btn-primary"%>
