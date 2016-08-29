@@ -1,6 +1,7 @@
 class EnactersController < ApplicationController
-  before_filter :check_admin_premission
-  # before_filter :check_leader_premission
+  before_action :authenticate_user!
+  before_filter :check_admin_premission, only: [:invite_enacters, :send_invitation, :destroy]
+  before_filter :check_admin_and_leader_premission, only: [:index, :show]
   before_action :set_enacter, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -75,10 +76,12 @@ class EnactersController < ApplicationController
     user_position = params[:position] || {}
 
     user_project.each do |user_id, project_id|
+      # project_id = current_user.project_id if current_user.leader?
       user_attributes[user_id] = { project_id: project_id }
     end
 
     user_position.each do |user_id, position|
+      # position = "colaborator" if current_user.leader?
       user_attributes[user_id] ||= {}
       user_attributes[user_id][:position] = position
     end
@@ -91,6 +94,10 @@ class EnactersController < ApplicationController
       format.html { redirect_to enacters_url, notice: "Se han guardado los cambios." }
       format.json { head :no_content }
     end
+  end
+
+  def join_to_my_team
+
   end
 
   def update
@@ -143,13 +150,13 @@ class EnactersController < ApplicationController
   end
 
   def check_admin_premission
-    unless (current_user and current_user.admin?) or (current_user and current_user.id == params[:id])
+    unless current_user.admin? or (current_user.id == params[:id])
       redirect_to :root
     end
   end
 
-  def check_leader_premission
-    unless (current_user and current_user.leader?) or (current_user and current_user.id == params[:id])
+  def check_admin_and_leader_premission
+    unless current_user.admin? or current_user.leader? or (current_user.id == params[:id])
       redirect_to :root
     end
   end

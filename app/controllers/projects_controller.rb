@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!
   before_filter :check_premission
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
