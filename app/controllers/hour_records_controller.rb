@@ -1,4 +1,6 @@
 class HourRecordsController < ApplicationController
+  before_action :check_if_login, only: :index
+  before_action :authenticate_user!
   before_action :set_hour_record, only: [:show, :edit, :update, :destroy]
 
   # GET /hour_records
@@ -70,5 +72,9 @@ class HourRecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def hour_record_params
       params.require(:hour_record).permit(:activity_id, :user_id, :worked_hours, :worked_date, :description)
+    end
+
+    def check_if_login
+      redirect_to new_user_session_path unless user_signed_in?
     end
 end
