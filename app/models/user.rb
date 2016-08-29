@@ -39,8 +39,13 @@ class User < ActiveRecord::Base
   end
 
   def leader?
-    position == "leader"
+    position == "project_leader"
     # Project.exists?(manager_id: id)
+  end
+
+  def my_leader
+    return [] if admin? or leader? or position.nil?
+    Project.where(project_id: project_id, position: "project_leader")
   end
 
   def full_name
