@@ -22,7 +22,11 @@
           <tbody>
             <tr>
               <td>Líder</td>
-              <td><%= project.leader.full_name %></td>
+              <td>
+                <% project.leaders.each do |leader| %>
+                  <%= leader.full_name %><br>
+                <% end %>
+              </td>
             </tr>
             <tr>
               <td>Colaboradores</td>

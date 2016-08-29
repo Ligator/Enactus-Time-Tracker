@@ -11,19 +11,18 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="form-group">
+    <%= f.label :name, "Nombre" %><br>
+    <%= f.text_field :name, class: "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+  <div class="form-group">
+    <%= f.label :description, "Descripción" %><br>
+    <%= f.text_area :description, class: "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :manager_id %><br>
-    <%= f.number_field :manager_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="row">
+    <div class="text-right">
+      <%= f.submit "Crear/Actualizar Proyecto", class: "btn btn-primary"%>
+      <%= link_to "Cancelar", projects_path, class: "btn btn-default" %>
+    </div>
   </div>
 <% end %>
