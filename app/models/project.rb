@@ -6,7 +6,11 @@ class Project < ActiveRecord::Base
     User.where(project_id: id, position: "project_leader")
   end
 
-  def colaborators
-    User.where(project_id: id, position: "colaborator")
+  def collaborators
+    User.where(project_id: id, position: "collaborator")
+  end
+
+  def total_hours
+  	HourRecord.where(activity_id: activities.pluck(:id)).pluck(:worked_hours).sum
   end
 end
