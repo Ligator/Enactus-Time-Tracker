@@ -8,11 +8,10 @@ class ActivitiesController < ApplicationController
   def index
     if current_user.leader?
       @activities = Activity.for_user(current_user).group_by(&:project_id)
-      @project = current_user.project
+      @projects = [current_user.project]
     elsif current_user.admin?
-      @activities = Activity.all.group_by(&:project_id)
-      @project_names = {}
-      Project.select(:id, :name).each{ |project| @project_names[project.id] = project.name }
+      @activities = Activity.order("id DESC").group_by(&:project_id)
+      @projects = Project.select(:id, :name)
     end
 
     @hours_per_activity = {}
@@ -20,6 +19,8 @@ class ActivitiesController < ApplicationController
       @hours_per_activity[hour_record.activity_id] ||= 0
       @hours_per_activity[hour_record.activity_id] += hour_record.worked_hours
     end
+
+    @hours_without_activity = HourRecord.where(activity_id: nil).pluck(:worked_hours).sum
   end
 
   # GET /activities/1
@@ -40,11 +41,11 @@ class ActivitiesController < ApplicationController
   # POST /activities.json
   def create
     ap activity_params
-    @activity = Activity.new(activity_params)
+    @activity = Activity.new(activity_params.merge(project_id: current_user.project_id))
 
     respond_to do |format|
       if @activity.save
-        format.html { redirect_to activities_url, notice: 'Activity was successfully created.' }
+        format.html { redirect_to activities_url, notice: "Actividad creada" }
         format.json { render :show, status: :created, location: @activity }
       else
         format.html { render :new }
@@ -58,7 +59,7 @@ class ActivitiesController < ApplicationController
   def update
     respond_to do |format|
       if @activity.update(activity_params)
-        format.html { redirect_to activities_url, notice: 'Activity was successfully updated.' }
+        format.html { redirect_to activities_url, notice: "Actividad actualizada correctamente" }
         format.json { render :show, status: :ok, location: @activity }
       else
         format.html { render :edit }
@@ -70,10 +71,14 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1
   # DELETE /activities/1.json
   def destroy
-    @activity.destroy
-    respond_to do |format|
-      format.html { redirect_to activities_url, notice: 'Activity was successfully destroyed.' }
-      format.json { head :no_content }
+    if @activity.hour_records.count > 0
+      flash[:error] = "No se pueden eliminar actividades que ya tengan horas registradas."
+    else
+      @activity.destroy
+      respond_to do |format|
+        format.html { redirect_to activities_url, notice: "La actividad fue eliminada." }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -85,7 +90,7 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_strong_params
-      params.require(:activity).permit(:name, :description, :project_id)
+      params.require(:activity).permit(:name, :description)
     end
 
     def activity_params
