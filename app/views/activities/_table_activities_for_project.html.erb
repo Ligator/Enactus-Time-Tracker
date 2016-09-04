@@ -1,4 +1,11 @@
-<legend>Actividades <%= " de " + project_name if project_name %></legend>
+<legend>
+  Actividades <%= " de " + project.name if project %>
+  <% if project %>
+    <small><%= " (" + project.total_hours.to_s + " hrs)" %></small>
+  <% else %>
+    <small><%= " (" + @hours_without_activity.to_s + " hrs)" %></small>
+  <% end %>
+</legend>
 
 <table class="table table-striped">
   <thead>
@@ -16,8 +23,12 @@
         <td><%= activity.name %></td>
         <td><%= activity.description %></td>
         <td><%= @hours_per_activity[activity.id].to_f %></td>
-        <td><%= link_to 'Editar', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Eliminar', activity, method: :delete, data: { confirm: "¿Seguro que desea eliminar esta actividad?" } %></td>
+        <% if current_user.project == project %>
+          <td><%= link_to 'Editar', edit_activity_path(activity) %></td>
+          <td><%= link_to 'Eliminar', activity, method: :delete, data: { confirm: "¿Seguro que desea eliminar esta actividad?" } %></td>
+        <% else %>
+          <td></td><td></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -1,17 +1,16 @@
-<% if current_user.leader? %>
-  <div class="text-right">
-    <%= link_to "Nueva Actividad", new_activity_path, class: "btn btn-primary" %>
-  </div>
+<div class="text-right">
+  <%= link_to "Nueva Actividad", new_activity_path, class: "btn btn-primary" %>
+</div>
 
-  <%= render partial: "table_activities_for_project", locals: { activities: @activities.values.first, project_name: (@project ? @project.name : nil) } %>
+<% if current_user.leader? %>
+  <%= render partial: "table_activities_for_project", locals: { activities: @activities.values.first, project: @projects.first } %>
 <% end %>
 
 <% if current_user.admin? %>
-  <% @activities.each do |projec_id, activities| %>
+  <% @activities.each do |project_id, activities| %>
     <br>
-    <%= render partial: "table_activities_for_project", locals: { activities: activities, project_name: @project_names[projec_id] } %>
+    <%= render partial: "table_activities_for_project", locals: { activities: activities, project: (@projects.find(project_id) if project_id) } %>
   <% end %>
 <% end %>
 
 <br>
-
