@@ -1,4 +1,4 @@
-<h2>Enacters</h2>
+<legend>Enacters</legend>
 
 <% if @edit_mode %>
   <%= form_tag url_for(:controller => 'enacters', :action => 'update_positions'), :method => 'put' do %>
@@ -7,22 +7,40 @@
       <%= link_to "Cancelar", enacters_path, class: "btn btn-default" %>
     </div>
 
-    <%= render partial: "table_all_enacters_edit", locals: { all_enacters: @enacters + @free_enacters } %>
+    <%= render partial: "table_all_enacters_edit", locals: { all_enacters: @enacters } %>
+
+    <br><br>
+    <legend>Enacters sin proyecto</legend>
+    <%= render partial: "table_all_enacters_edit", locals: { all_enacters: @free_enacters } %>
 
   <% end %>
 <% else %>
-  <div class="text-right">
-    <%= link_to "Editar asignaciones", enacters_path(mode: "edit"), class: "btn btn-default" %>
-  </div>
+  <% if current_user.admin? %>
+    <div class="text-right">
+      <%= link_to "Editar asignaciones", enacters_path(mode: "edit"), class: "btn btn-default" %>
+    </div>
+  <% end %>
 
-  <%= render partial: "table_all_enacters_show", locals: { all_enacters: @enacters + @free_enacters } %>
+  <%= render partial: "table_all_enacters_show", locals: { all_enacters: @enacters } %>
 
   <br><br>
-  <div class="text-right">
-    <%= link_to "Invitar enacters", invite_enacters_path, class: "btn btn-primary" %>
-  </div>
+  <legend>Enacters sin proyecto</legend>
+  <% if current_user.leader? %>
+    <div class="text-right">
+      <%#= link_to "Agregar a mi proyecto", enacters_path(mode: "edit"), class: "btn btn-default" %>
+    </div>
+  <% end %>
+  <%= render partial: "table_all_enacters_show", locals: { all_enacters: @free_enacters } %>
 
-  <% if @users_invited.any? %>
-    <%= render partial: "table_invited_enacters_show", locals: { invited_enacters: @users_invited } %>
+  <% if current_user.admin? %>
+    <br><br>
+    <legend>Enacters pendientes por aceptar la invitación</legend>
+    <div class="text-right">
+      <%= link_to "Invitar enacters", invite_enacters_path, class: "btn btn-primary" %>
+    </div>
+
+    <% if @users_invited.any? %>
+      <%= render partial: "table_invited_enacters_show", locals: { invited_enacters: @users_invited } %>
+    <% end %>
   <% end %>
 <% end %>

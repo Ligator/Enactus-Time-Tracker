@@ -1,7 +1,7 @@
 class EnactersController < ApplicationController
   before_action :authenticate_user!
   before_filter :check_admin_premission, only: [:invite_enacters, :send_invitation, :destroy]
-  before_filter :check_admin_and_leader_premission, only: [:index, :show]
+  before_filter :check_admin_and_leader_premission, only: [:index, :show, :update_positions]
   before_action :set_enacter, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -10,17 +10,21 @@ class EnactersController < ApplicationController
                   where(project_id: current_user.project_id).
                   order(:lname1, :lname2, :fname)
 
+      @free_enacters = User.collaborators.without_project.
+                       order(:lname1, :lname2, :fname)
+
       @users_invited = []
     elsif current_user.admin?
       @enacters = User.with_project.
                   order(:project_id, :lname1, :lname2, :fname)
 
+      @free_enacters = User.without_project.
+                       order(:lname1, :lname2, :fname)
+
       @users_invited = User.unconfirmed.
                        order(:lname1, :lname2, :fname)
     end
 
-    @free_enacters = User.without_project.
-                     order(:lname1, :lname2, :fname)
 
     if params[:mode] == "edit" and current_user.admin?
       @edit_mode = true
@@ -76,12 +80,12 @@ class EnactersController < ApplicationController
     user_position = params[:position] || {}
 
     user_project.each do |user_id, project_id|
-      # project_id = current_user.project_id if current_user.leader?
+      project_id = current_user.project_id if current_user.leader?
       user_attributes[user_id] = { project_id: project_id }
     end
 
     user_position.each do |user_id, position|
-      # position = "colaborator" if current_user.leader?
+      position = "collaborator" if current_user.leader?
       user_attributes[user_id] ||= {}
       user_attributes[user_id][:position] = position
     end
@@ -135,7 +139,7 @@ class EnactersController < ApplicationController
     users_email = User.confirmed.where(email: email_list.lines).pluck(:email)
     email_list.each_line do |email|
       next if users_email.include? email
-      User.invite!(email: email, position: "colaborator")
+      User.invite!(email: email, position: "collaborator")
     end
     email_list.lines - users_email
   end
