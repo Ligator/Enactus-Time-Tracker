@@ -6,7 +6,10 @@ class HourRecordsController < ApplicationController
   # GET /hour_records
   # GET /hour_records.json
   def index
-    @hour_records = HourRecord.all
+    @hour_records = HourRecord.for_user(current_user)
+    if current_user.admin?
+      @all_hour_records = HourRecord.all
+    end
   end
 
   # GET /hour_records/1
@@ -42,6 +45,7 @@ class HourRecordsController < ApplicationController
   # PATCH/PUT /hour_records/1
   # PATCH/PUT /hour_records/1.json
   def update
+    current_user.project.activities.map(&:id).includes?(hour_record_params[:activity_id])
     respond_to do |format|
       if @hour_record.update(hour_record_params)
         format.html { redirect_to @hour_record, notice: 'Hour record was successfully updated.' }
@@ -67,11 +71,20 @@ class HourRecordsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_hour_record
       @hour_record = HourRecord.find(params[:id])
+      if @hour_record.user != current_user
+        redirect_to hour_records_url
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    def hour_record_strong_params
+      params.require(:hour_record).permit(:activity_id, :worked_hours, :worked_date, :description)
+    end
+
     def hour_record_params
-      params.require(:hour_record).permit(:activity_id, :user_id, :worked_hours, :worked_date, :description)
+      params_hash = hour_record_strong_params.to_hash.symbolize_keys
+      params_hash[:user_id] = current_user.id
+      params_hash
     end
 
     def check_if_login

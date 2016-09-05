@@ -25,11 +25,7 @@
 
   <br><br>
   <legend>Enacters sin proyecto</legend>
-  <% if current_user.leader? %>
-    <div class="text-right">
-      <%#= link_to "Agregar a mi proyecto", enacters_path(mode: "edit"), class: "btn btn-default" %>
-    </div>
-  <% end %>
+
   <%= render partial: "table_all_enacters_show", locals: { all_enacters: @free_enacters } %>
 
   <% if current_user.admin? %>
