@@ -11,6 +11,6 @@ class Project < ActiveRecord::Base
   end
 
   def total_hours
-  	HourRecord.where(activity_id: activities.pluck(:id)).pluck(:worked_hours).sum
+  	HourRecord.where(activity_id: activities.pluck(:id)).pluck(:worked_hours_dec).sum
   end
 end

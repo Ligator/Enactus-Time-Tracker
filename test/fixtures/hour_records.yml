@@ -3,13 +3,13 @@
 one:
   activity_id: 
   user_id: 
-  worked_hours: 2016-08-21 23:37:40
+  worked_hours_dec: 1.0
   worked_date: 2016-08-21
   description: MyText
 
 two:
   activity_id: 
   user_id: 
-  worked_hours: 2016-08-21 23:37:40
+  worked_hours_dec: 1.0
   worked_date: 2016-08-21
   description: MyText

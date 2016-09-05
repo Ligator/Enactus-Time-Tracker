@@ -18,7 +18,7 @@
     <% @hour_records.each do |hour_record| %>
       <tr>
         <td><%= hour_record.activity.present? ? hour_record.activity.name : "" %></td>
-        <td><%= hour_record.worked_hours.to_i %></td>
+        <td><%= hour_record.worked_hours_dec.to_f %></td>
         <td><%= hour_record.worked_date.present? ? hour_record.worked_date.strftime("%e %B, %Y") : "" %></td>
         <td><%= hour_record.description %></td>
         <td><%= link_to 'Show', hour_record %></td>

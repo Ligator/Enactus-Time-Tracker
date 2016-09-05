@@ -18,7 +18,7 @@ class HourRecordsControllerTest < ActionController::TestCase
 
   test "should create hour_record" do
     assert_difference('HourRecord.count') do
-      post :create, hour_record: { activity_id: @hour_record.activity_id, description: @hour_record.description, user_id: @hour_record.user_id, worked_date: @hour_record.worked_date, worked_hours: @hour_record.worked_hours }
+      post :create, hour_record: { activity_id: @hour_record.activity_id, description: @hour_record.description, user_id: @hour_record.user_id, worked_date: @hour_record.worked_date, worked_hours_dec: @hour_record.worked_hours_dec }
     end
 
     assert_redirected_to hour_record_path(assigns(:hour_record))
@@ -35,7 +35,7 @@ class HourRecordsControllerTest < ActionController::TestCase
   end
 
   test "should update hour_record" do
-    patch :update, id: @hour_record, hour_record: { activity_id: @hour_record.activity_id, description: @hour_record.description, user_id: @hour_record.user_id, worked_date: @hour_record.worked_date, worked_hours: @hour_record.worked_hours }
+    patch :update, id: @hour_record, hour_record: { activity_id: @hour_record.activity_id, description: @hour_record.description, user_id: @hour_record.user_id, worked_date: @hour_record.worked_date, worked_hours_dec: @hour_record.worked_hours_dec }
     assert_redirected_to hour_record_path(assigns(:hour_record))
   end
 

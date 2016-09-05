@@ -17,10 +17,10 @@ class ActivitiesController < ApplicationController
     @hours_per_activity = {}
     HourRecord.where(activity_id: @activities.values.flatten.map(&:id)).each do |hour_record|
       @hours_per_activity[hour_record.activity_id] ||= 0
-      @hours_per_activity[hour_record.activity_id] += hour_record.worked_hours
+      @hours_per_activity[hour_record.activity_id] += hour_record.worked_hours_dec
     end
 
-    @hours_without_activity = HourRecord.where(activity_id: nil).pluck(:worked_hours).sum
+    @hours_without_activity = HourRecord.where(activity_id: nil).pluck(:worked_hours_dec).sum
   end
 
   # GET /activities/1

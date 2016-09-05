@@ -78,7 +78,7 @@ class HourRecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def hour_record_strong_params
-      params.require(:hour_record).permit(:activity_id, :worked_hours, :worked_date, :description)
+      params.require(:hour_record).permit(:activity_id, :worked_hours_dec, :worked_date, :description)
     end
 
     def hour_record_params
