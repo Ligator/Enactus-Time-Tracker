@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :project
+  has_many :hour_records
 
   scope :with_project,    -> { where("invitation_accepted_at IS NOT NULL AND project_id IS NOT NULL") }
   scope :without_project, -> { where("invitation_accepted_at IS NOT NULL AND project_id IS NULL") }
