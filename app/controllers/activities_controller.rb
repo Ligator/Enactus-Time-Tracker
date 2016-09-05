@@ -41,7 +41,7 @@ class ActivitiesController < ApplicationController
   # POST /activities.json
   def create
     ap activity_params
-    @activity = Activity.new(activity_params.merge(project_id: current_user.project_id))
+    @activity = Activity.new(activity_params)
 
     respond_to do |format|
       if @activity.save
