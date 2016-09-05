@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829082253) do
+ActiveRecord::Schema.define(version: 20160905064836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,9 @@ ActiveRecord::Schema.define(version: 20160829082253) do
     t.time     "worked_hours"
     t.date     "worked_date"
     t.text     "description"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.decimal  "worked_hours_dec", default: 0.0
   end
 
   add_index "hour_records", ["activity_id"], name: "index_hour_records_on_activity_id", using: :btree
