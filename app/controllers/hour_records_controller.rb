@@ -20,10 +20,12 @@ class HourRecordsController < ApplicationController
   # GET /hour_records/new
   def new
     @hour_record = HourRecord.new
+    @activities = current_user.project ? current_user.project.activities.map{|a| [ a.name, a.id ] } : []
   end
 
   # GET /hour_records/1/edit
   def edit
+    @activities = current_user.project ? current_user.project.activities.map{|a| [ a.name, a.id ] } : []
   end
 
   # POST /hour_records

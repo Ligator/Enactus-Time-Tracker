@@ -13,12 +13,12 @@
 
   <div class="form-group">
     <%= f.label :activity_id, "Actividad" %><br>
-    <%= f.select :activity_id, current_user.project.activities.map{|a| [ a.name, a.id ] }, { include_blank: "Ninguno" }, { class: "form-control" } %>
+    <%= f.select :activity_id, @activities, { include_blank: "Ninguno" }, { class: "form-control" } %>
   </div>
   <div class="form-group">
     <%= f.label :worked_hours_dec, "Horas trabajadas" %><br>
     <%#= f.time_select :worked_hours_dec, class: "form-control" %>
-    <%= f.text_field :worked_hours_dec, class: "form-control" %>
+    <%= f.text_field :worked_hours_dec, class: "form-control", onClick: "this.select();" %>
   </div>
   <div class="field">
   <div class="form-group">
