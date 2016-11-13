@@ -61,9 +61,9 @@ class EnactersController < ApplicationController
         if valid_emails.blank?
           flash[:error] = "Todos los correos pertenecen a usuarios activos del sistema."
         elsif valid_emails.size == 1
-          flash[:notice] = "Se ha enviado la invitación a #{valid_emails.first}."
+          flash[:notice] = "Se ha enviado la invitación a #{valid_emails.first}. Recargue la página en un momento para ver los cambios."
         else
-          flash[:notice] = "Se ha enviado la invitación a #{valid_emails.size} usuarios."
+          flash[:notice] = "Se ha enviado la invitación a #{valid_emails.size} usuarios. Recargue la página en un momento para ver los cambios."
         end
         format.html { redirect_to enacters_url }
         format.json { head :no_content }
