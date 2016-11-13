@@ -2,6 +2,8 @@ es:
   devise:
     failure:
       invited: "Tienes una invitación pendiente. Para terminar de crear tu cuenta, debes acceptar la invitación."
+      user:
+        not_found_in_database: "Nombre de usuario o contraseña incorrectos"
     invitations:
       send_instructions: "Una invitación se ha enviado por correo a %{email}."
       invitation_token_invalid: "¡El token de invitación no es válido!"
