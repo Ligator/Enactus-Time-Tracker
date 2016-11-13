@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   scope :without_project, -> { where("invitation_accepted_at IS NOT NULL AND project_id IS NULL") }
   scope :confirmed,       -> { where("invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NOT NULL") }
   scope :unconfirmed,     -> { where("invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL") }
-  scope :collaborators,    -> { where(position: "collaborator") }
+  scope :collaborators,   -> { where(position: "collaborator") }
 
   MAJORS = {
     "0" => "Licenciatura en Ciencias Empresariales",
