@@ -139,7 +139,7 @@ class EnactersController < ApplicationController
     users_email = User.confirmed.where(email: email_list.lines).pluck(:email)
     email_list.each_line do |email|
       next if users_email.include? email
-      User.invite!(email: email, position: "collaborator")
+      User.delay.invite!(email: email, position: "collaborator")
     end
     email_list.lines - users_email
   end

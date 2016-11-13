@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
     "human_resources" => "Recursos Humanos",
     "system_manager"  => "Administrador de sistema",
     "project_leader"  => "Líder de Proyecto",
-    "collaborator"     => "Colaborador",
+    "collaborator"    => "Colaborador",
   }
 
   def admin?
