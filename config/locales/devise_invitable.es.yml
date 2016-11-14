@@ -21,7 +21,7 @@ es:
       invitation_instructions:
         subject: "Instruciones de la invitación"
         hello: "¡Saludos Enacter!"
-        someone_invited_you: "Esta es una invitación a nuestro sistema de control de horas, en la cual podrás registrar cada una de las tareas que realices, así como el tiempo que hayas invertido en ellas. Solo da click en 'Aceptar invitación' y configura tu contraseña."
+        someone_invited_you: "Esta es una invitación a nuestro sistema de control de horas, en el cual podrás registrar cada una de las tareas que realices, así como el tiempo que hayas invertido en ellas. Solo da click en 'Aceptar invitación' y configura tu contraseña."
         accept: "Aceptar invitación"
         accept_until: "Invitación válida hasta %{due_date}."
         ignore: "Si no deseas aceptar esta invitación, por favor ignora este email.<br />Tu cuenta no será creada hasta que hagas click en el link de arriba y configures tu contraseña."
