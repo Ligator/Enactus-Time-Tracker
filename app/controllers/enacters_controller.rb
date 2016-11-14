@@ -37,6 +37,10 @@ class EnactersController < ApplicationController
   end
 
   def show
+    if current_user.leader? and @enacter.project != current_user.project
+      flash[:error] = "Este usuario no pertence a tu proyecto"
+      redirect_to enacters_url and return
+    end
   end
 
   def invite_enacters

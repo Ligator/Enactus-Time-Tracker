@@ -18,6 +18,7 @@
         <td><%= enacter.project.name if enacter.project %></td>
         <td><%= enacter.position_title %></td>
         <td>
+          <%= link_to '<i class="fa fa-eye" aria-hidden="true"></i>'.html_safe, "/enacters/#{enacter.id}", style: "color:black" %>&nbsp;&nbsp;
           <% if current_user.leader? and enacter.project.blank? %>
             <%= link_to "Agregar a mi proyecto", "enacters/update_positions?project_id[#{enacter.id}]=join", method: :put, data: {}, class: "btn btn-default" %>
           <% end %>

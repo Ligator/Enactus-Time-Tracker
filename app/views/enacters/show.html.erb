@@ -1,2 +1,58 @@
-<h1>Enacters#show</h1>
-<p>Find me in app/views/enacters/show.html.erb</p>
+<div class="row">
+<div class="col-md-offset-3 col-md-6">
+  <fieldset>
+  <legend><%= @enacter.full_name.blank? ? "(No se ha ingresado el nombre)" : @enacter.full_name %></legend>
+
+  <div class="form-group row">
+    <%= label_tag :major, "Carrera", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <div class="form-control"><%= @enacter.major %></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= label_tag :semester, "Semestre", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <div class="form-control"><%= @enacter.semester %></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= label_tag :group, "Grupo", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <div class="form-control"><%= @enacter.group %></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= label_tag :cellphone, "Teléfono celular", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <div class="form-control"><%= @enacter.cellphone %></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= label_tag :enrollment, "Matrícula", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <div class="form-control"><%= @enacter.enrollment %></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= label_tag :birthday, "Fecha de nacimiento", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <div class="form-control"><%= @enacter.birthday.blank? ? "" : @enacter.birthday.strftime("%e %B, %Y") %></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= label_tag :email, "Email", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <div class="form-control"><%= @enacter.email %></div>
+    </div>
+  </div>
+
+  </fieldset>
+</div>
+</div>
+
