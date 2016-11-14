@@ -1,3 +1,9 @@
+<% if current_user.full_name.blank? %>
+  <div>
+    No olvides completar la información de tu perfil aquí: <%= link_to "Perfil", edit_user_registration_path %>
+  </div>
+<% end %>
+
 <h1>Registro de horas</h1>
 <div class="text-right">
   <h4>(<%= @hour_records_total.to_f %>hrs)</h4>
