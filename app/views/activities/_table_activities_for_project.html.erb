@@ -18,12 +18,14 @@
   </thead>
 
   <tbody>
-    <tr>
-      <td>(Sin actividad)</td>
-      <td></td>
-      <td><%= @hours_without_activity.to_s %></td>
-      <td></td><td></td>
-    </tr>
+    <% if project.blank? %>
+      <tr>
+        <td>(Sin actividad)</td>
+        <td></td>
+        <td><%= @hours_without_activity.to_s %></td>
+        <td></td><td></td>
+      </tr>
+    <% end %>
     <% activities.each do |activity| %>
       <tr>
         <td><%= activity.name %></td>
