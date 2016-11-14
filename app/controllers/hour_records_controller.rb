@@ -48,7 +48,7 @@ class HourRecordsController < ApplicationController
   # PATCH/PUT /hour_records/1
   # PATCH/PUT /hour_records/1.json
   def update
-    current_user.project.activities.map(&:id).includes?(hour_record_params[:activity_id])
+    # current_user.project.activities.map(&:id).includes?(hour_record_params[:activity_id])
     respond_to do |format|
       if @hour_record.update(hour_record_params)
         format.html { redirect_to @hour_record, notice: 'Hour record was successfully updated.' }
