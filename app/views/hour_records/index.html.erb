@@ -1,11 +1,15 @@
 <h1>Registro de horas</h1>
 <div class="text-right">
+  <h4>(<%= @hour_records_total.to_f %>hrs)</h4>
+</div>
+<div class="text-right">
   <%= link_to "Nuevo Registro", new_hour_record_path, class: "btn btn-default" %>
 </div>
 
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>Proyecto</th>
       <th>Actividad</th>
       <th>Horas reportadas</th>
       <th>Fechas</th>
@@ -17,6 +21,7 @@
   <tbody>
     <% @hour_records.each do |hour_record| %>
       <tr>
+        <td><%= hour_record.project.present? ? hour_record.project.name : "General" %></td>
         <td><%= hour_record.activity.present? ? hour_record.activity.name : "" %></td>
         <td><%= hour_record.worked_hours_dec.to_f %></td>
         <td><%= hour_record.worked_date.present? ? hour_record.worked_date.strftime("%e %B, %Y") : "" %></td>

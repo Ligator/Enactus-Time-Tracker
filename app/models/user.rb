@@ -65,4 +65,17 @@ class User < ActiveRecord::Base
   def major_title
     MAJORS[position]
   end
+
+  def activities
+    Activity.where(project_id: [project_id, nil])
+  end
+
+  def grouped_activities
+    grouped_activities = {}
+    for_all_users = Activity.where(project_id: nil).to_a.map{|a| [ a.name, a.id ] }
+    by_project = Activity.where(project_id: project_id).to_a.map{|a| [ a.name, a.id ] }
+    grouped_activities["Actividades generales"] = for_all_users if for_all_users.any?
+    grouped_activities["Actividades del proyecto"] = by_project if by_project.any?
+    grouped_activities
+  end
 end

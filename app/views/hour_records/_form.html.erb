@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <%= f.label :activity_id, "Actividad" %><br>
-    <%= f.select :activity_id, @activities, { include_blank: "Ninguno" }, { class: "form-control" } %>
+    <%= f.select :activity_id, grouped_options_for_select(@activities), { include_blank: "Ninguno" }, { class: "form-control" } %>
   </div>
   <div class="form-group">
     <%= f.label :worked_hours_dec, "Horas trabajadas" %><br>

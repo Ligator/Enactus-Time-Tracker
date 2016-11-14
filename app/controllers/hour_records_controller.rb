@@ -7,6 +7,7 @@ class HourRecordsController < ApplicationController
   # GET /hour_records.json
   def index
     @hour_records = HourRecord.for_user(current_user)
+    @hour_records_total = @hour_records.map(&:worked_hours_dec).sum
     if current_user.admin?
       @all_hour_records = HourRecord.all
     end
@@ -20,12 +21,12 @@ class HourRecordsController < ApplicationController
   # GET /hour_records/new
   def new
     @hour_record = HourRecord.new
-    @activities = current_user.project ? current_user.project.activities.map{|a| [ a.name, a.id ] } : []
+    @activities = current_user.grouped_activities
   end
 
   # GET /hour_records/1/edit
   def edit
-    @activities = current_user.project ? current_user.project.activities.map{|a| [ a.name, a.id ] } : []
+    @activities = current_user.grouped_activities
   end
 
   # POST /hour_records
