@@ -21,6 +21,7 @@ class ActivitiesController < ApplicationController
     end
 
     @hours_without_activity = HourRecord.where(activity_id: nil).pluck(:worked_hours_dec).sum
+    @hours_without_project = HourRecord.joins(:activity).where(activities: { project_id: nil }).pluck(:worked_hours_dec).sum
   end
 
   # GET /activities/1
