@@ -14,4 +14,7 @@
  *= require_self
  *= require jquery-ui
  *= require font-awesome 
+ *= require alertify
+ *= require alertify/default
+ *= require alertify/bootstrap
  */
