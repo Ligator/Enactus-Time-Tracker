@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   end
 
   def major_title
-    MAJORS[position]
+    MAJORS[major]
   end
 
   def activities
