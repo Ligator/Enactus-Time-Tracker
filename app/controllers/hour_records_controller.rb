@@ -36,7 +36,7 @@ class HourRecordsController < ApplicationController
 
     respond_to do |format|
       if @hour_record.save
-        format.html { redirect_to @hour_record, notice: 'Hour record was successfully created.' }
+        format.html { redirect_to hour_records_url, notice: "Tu registro se creó correctamente" }
         format.json { render :show, status: :created, location: @hour_record }
       else
         format.html { render :new }
@@ -51,7 +51,7 @@ class HourRecordsController < ApplicationController
     # current_user.project.activities.map(&:id).includes?(hour_record_params[:activity_id])
     respond_to do |format|
       if @hour_record.update(hour_record_params)
-        format.html { redirect_to @hour_record, notice: 'Hour record was successfully updated.' }
+        format.html { redirect_to hour_records_url, notice: "Tu registro se actualizó correctamente" }
         format.json { render :show, status: :ok, location: @hour_record }
       else
         format.html { render :edit }
@@ -65,7 +65,7 @@ class HourRecordsController < ApplicationController
   def destroy
     @hour_record.destroy
     respond_to do |format|
-      format.html { redirect_to hour_records_url, notice: 'Hour record was successfully destroyed.' }
+      format.html { redirect_to hour_records_url, notice: "Tu registro se eliminó correctamente" }
       format.json { head :no_content }
     end
   end
