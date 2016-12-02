@@ -3,13 +3,13 @@
 </div>
 
 <% if current_user.leader? %>
-  <%= render partial: "table_activities_for_project", locals: { activities: @activities.values.first, project: @projects.first } %>
+  <%= render partial: "table_activities_for_project", locals: { activities: @activities.values.first || [], project: @projects.first } %>
 <% end %>
 
 <% if current_user.admin? %>
   <% @activities.each do |project_id, activities| %>
     <br>
-    <%= render partial: "table_activities_for_project", locals: { activities: activities, project: (@projects.find(project_id) if project_id) } %>
+    <%= render partial: "table_activities_for_project", locals: { activities: activities || [], project: (@projects.find(project_id) if project_id) } %>
   <% end %>
 <% end %>
 
