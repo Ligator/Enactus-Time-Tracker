@@ -47,6 +47,7 @@ gem 'pg'
 gem 'thin', '1.6.3'
 gem 'delayed_job_active_record'
 gem 'alertifyjs-rails'
+gem 'write_xlsx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
