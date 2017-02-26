@@ -1,0 +1,46 @@
+<h1><%= @user.full_name %></h1>
+<%= @user.major_title %> | <%= @user.email %><br>
+<%= @user.project.present? ? @user.project.name : "General" %> | <%= @user.position_title %>
+<div class="navbar-form navbar-right">
+  <h2>
+    Total: <%= @user.hour_records.sum(:worked_hours_dec) %>
+  </h2>
+</div>
+<br><br>
+<%= link_to "Download data", reports_enacter_details_path(id: @user.id, format: :xlsx), class: "btn btn-success" %>
+
+
+<table class="enacters_hours table">
+  <caption><%= @user.full_name %></caption>
+  <tbody>
+    <tr>
+      <th width="150px"></th>
+      <th>Fecha</th>
+      <th>Proyecto</th>
+      <th>Actividad</th>
+      <th>Horas trabajadas</th>
+      <th>Descripción</th>
+    </tr>
+    <% @hour_records_month.each do |month, hour_records| %>
+      <tr class="info">
+        <th colspan="6"><%= month.present? ? month.strftime("%B %Y") : "Registros sin fecha" %></th>
+      </tr>
+      <% hour_records.each do |hour_record| %>
+        <tr>
+          <td></td>
+          <td><%= hour_record.worked_date.present? ? hour_record.worked_date.strftime("%e %B, %Y") : "" %></td>
+          <td><%= hour_record.project.present? ? hour_record.project.name : "General" %></td>
+          <td><%= hour_record.activity.present? ? hour_record.activity.name : "" %></td>
+          <td><%= hour_record.worked_hours_dec.to_f %></td>
+          <td><%= hour_record.description %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="3"></td>
+        <td><b>Total: </b></td>
+        <td><b><%= hour_records.sum(&:worked_hours_dec) %></b></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

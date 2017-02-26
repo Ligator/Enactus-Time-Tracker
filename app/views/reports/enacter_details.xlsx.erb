@@ -1,0 +1,54 @@
+<% 
+  format_xls "table.enacters_hours" do
+    workbook use_autowidth: true
+    format "th", b: true # bold
+    format "tbody tr", bg_color: lambda { |row| "eeeeee" if row.index.even? }
+    format "tbody tr.table-header", bg_color: lambda { |row| "dddddd" }, b: true
+    format "tbody tr.info", bg_color: lambda { |row| "d9edf7" }, b: true
+    format "tbody tr.bolded", bg_color: lambda { |row| "eeeeee" if row.index.even? }, b: true
+    format column: 2, width: 15
+    format column: 3, width: 35
+  end
+%>
+
+<table class="enacters_hours table">
+  <caption><%= @user.full_name %></caption>
+  <tbody>
+    <tr>
+      <td>Nombre: </td>
+      <td><%= @user.full_name %></td>
+      <td></td><td></td><td></td><td></td>
+    </tr>
+    <tr></tr>
+    <tr class="table-header">
+      <th width="150px"></th>
+      <th>Fecha</th>
+      <th>Proyecto</th>
+      <th>Actividad</th>
+      <th>Horas trabajadas</th>
+      <th>Descripción</th>
+    </tr>
+    <% @hour_records_month.each do |month, hour_records| %>
+      <tr class="info">
+        <th><%= month.present? ? month.strftime("%B %Y") : "Registros sin fecha" %></th>
+        <th></th><th></th><th></th><th></th><th></th>
+      </tr>
+      <% hour_records.each do |hour_record| %>
+        <tr>
+          <td></td>
+          <td><%= hour_record.worked_date.present? ? hour_record.worked_date.strftime("%e %B, %Y") : "" %></td>
+          <td><%= hour_record.project.present? ? hour_record.project.name : "General" %></td>
+          <td><%= hour_record.activity.present? ? hour_record.activity.name : "" %></td>
+          <td><%= hour_record.worked_hours_dec.to_f %></td>
+          <td><%= hour_record.description %></td>
+        </tr>
+      <% end %>
+      <tr class="bolded">
+        <td></td><td></td><td></td>
+        <td><b>Total: </b></td>
+        <td><b><%= hour_records.sum(&:worked_hours_dec) %></b></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

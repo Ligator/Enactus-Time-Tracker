@@ -1,0 +1,29 @@
+<h1>Enacters Por Proyecto</h1>
+<p>Horas trabajadas por cada enacter en el mes <%= @selected_month%> de <%= @selected_year %>, agrupadas por proyecto.</p>
+<%= form_tag "/reports/total_hours", method: :get, class: "navbar-form navbar-right" do %>
+  <div class="form-group">
+    <%= select_month(@selected_month, { use_month_names: %w[Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre] }, class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <%= select_year(@selected_year, { start_year: @first_year, end_year: @last_year }, class: "form-control") %>
+  </div>
+  <%= submit_tag "Buscar", class: "btn btn-primary" %>
+<% end %>
+
+<br><br>
+<%= link_to "Download data", reports_total_hours_path(date: { month: @selected_month, year: @selected_year }, format: :xlsx), class: "btn btn-success" %>
+<br><br>
+
+<% @projects.each do |project| %>
+  <div class="col-md-6">
+  <%= render partial: "table_enacters", locals: { project: project } %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+      window.location = $(this).data("href");
+    });
+  });
+</script>

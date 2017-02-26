@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'reports/index'
+  get 'reports/user_activities'
+  get 'reports/total_hours'
+  get 'reports/enacter_details/:id' => 'reports#enacter_details', as: :reports_enacter_details
+
   get 'invite_enacters' => 'enacters#invite_enacters', as: :invite_enacters
   post 'enacters/send_invitation' => 'enacters#send_invitation'
   put 'enacters/update_positions' => 'enacters#update_positions'

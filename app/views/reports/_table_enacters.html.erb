@@ -1,0 +1,15 @@
+<table class="enacters_hours table table-striped table-bordered table-hover">
+  <caption><%= project ? project.name : "Actividades generales" %></caption>
+  <tbody>
+    <tr class="table-header">
+      <th>Enacter</th>
+      <th width="30%">Horas trabajadas</th>
+    </tr>
+    <% @users_hours[project].each do |user, hours| %>
+      <tr class='clickable-row' data-href='/reports/enacter_details/<%= user[0] %>'>
+        <td><%= user[1..-1].join(" ").squeeze(" ") %></td>
+        <td><%= hours %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
