@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
   before_filter :check_admin_and_leader_premission
+  before_filter :user_belongs_to_my_project?, only: [:enacter_details]
 
   def index
     # @exist_user_activities = File.file?(Rails.public_path + "/user_activities_#{Time.current.localtime.strftime('%v')}.xlsx")
@@ -17,8 +18,14 @@ class ReportsController < ApplicationController
       @selected_year = date.year
     end
 
-    @projects = Project.all.to_a
-    @projects.unshift(nil)
+    if current_user.admin?
+      @projects = Project.all.to_a
+      @projects.unshift(nil)
+    elsif current_user.leader?
+      @projects = [current_user.project]
+    else
+      redirect_to :root
+    end
 
     @users_hours = {}
     @projects.each do |project|
@@ -55,5 +62,9 @@ class ReportsController < ApplicationController
     unless current_user.admin? or current_user.leader? or (current_user.id == params[:id])
       redirect_to :root
     end
+  end
+
+  def user_belongs_to_my_project?
+    redirect_to :root if current_user.leader? and !current_user.project.users.pluck(:id).include?(params[:id].to_i)
   end
 end
