@@ -74,7 +74,8 @@ Rails.application.configure do
     user_name:            ENV["ENACTUS_EMAIL"],
     password:             ENV["ENACTUS_PASSWORD"],
     authentication:       "plain",
-    enable_starttls_auto: true
+    enable_starttls_auto: true,
+    openssl_verify_mode:  'none'
   }
 
 
