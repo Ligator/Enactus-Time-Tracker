@@ -7,8 +7,8 @@
       <div class="counter-number" style="font-size: 50px; text-align:center; margin-top: 0.5cm;"><%= image_tag(project.image_url) if project.image_url %></div>
       <h3><%= project.name.to_s %></h3>
       <small>
-        <%= link_to 'Mostrar', project_path(project) %> | 
-        <%= link_to 'Editar', edit_project_path(project) %> | 
+        <%= link_to 'Mostrar', project_path(project) %> |
+        <%= link_to 'Editar', edit_project_path(project) %> |
         <%= link_to 'Borrar', project, method: :delete, data: { confirm: 'Esta acción no se puede deshacer. ¿Está seguro de querer borrar el projecto?' } %>
       </small>
 
@@ -41,5 +41,9 @@
       </p><br>
 
     </div>
+    <% if (index + 1) % 3 == 0 %>
+      </div>
+      <div class="row">
+    <% end %>
   <% end %>
 </div>

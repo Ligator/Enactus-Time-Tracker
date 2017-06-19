@@ -5,11 +5,24 @@ class HourRecordsController < ApplicationController
 
   # GET /hour_records
   # GET /hour_records.json
+
+  # This is the old index action
+  # def index
+  #   @hour_records = HourRecord.for_user(current_user)
+  #   @hour_records_total = @hour_records.map(&:worked_hours_dec).sum
+  #   if current_user.admin?
+  #     @all_hour_records = HourRecord.all
+  #   end
+  # end
+
   def index
-    @hour_records = HourRecord.for_user(current_user)
-    @hour_records_total = @hour_records.map(&:worked_hours_dec).sum
-    if current_user.admin?
-      @all_hour_records = HourRecord.all
+    @user = current_user
+    @hour_records = @user.hour_records.order(worked_date: :desc)
+    @hour_records_month = @hour_records.group_by { |hr| hr.worked_date.try(:beginning_of_month) }
+
+    respond_to do |format|
+      format.html { render "reports/enacter_details" }
+      format.xlsx { render xlsx: :enacter_details, filename: "#{current_user.full_name} #{Date.today}" }
     end
   end
 
@@ -71,26 +84,27 @@ class HourRecordsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_hour_record
-      @hour_record = HourRecord.find(params[:id])
-      if @hour_record.user != current_user
-        redirect_to hour_records_url
-      end
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def hour_record_strong_params
-      params.require(:hour_record).permit(:activity_id, :worked_hours_dec, :worked_date, :description)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_hour_record
+    @hour_record = HourRecord.find(params[:id])
+    if @hour_record.user != current_user
+      redirect_to hour_records_url
     end
+  end
 
-    def hour_record_params
-      params_hash = hour_record_strong_params.to_hash.symbolize_keys
-      params_hash[:user_id] = current_user.id
-      params_hash
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def hour_record_strong_params
+    params.require(:hour_record).permit(:activity_id, :worked_hours_dec, :worked_date, :description)
+  end
 
-    def check_if_login
-      redirect_to new_user_session_path unless user_signed_in?
-    end
+  def hour_record_params
+    params_hash = hour_record_strong_params.to_hash.symbolize_keys
+    params_hash[:user_id] = current_user.id
+    params_hash
+  end
+
+  def check_if_login
+    redirect_to new_user_session_path unless user_signed_in?
+  end
 end

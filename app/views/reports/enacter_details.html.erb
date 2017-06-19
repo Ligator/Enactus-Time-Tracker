@@ -8,7 +8,11 @@
 </div>
 <br><br>
 <%= link_to "Download data", reports_enacter_details_path(id: @user.id, format: :xlsx), class: "btn btn-success" %>
-
+<% if @user == current_user %>
+  <div class="text-right">
+    <%= link_to "Nuevo Registro", new_hour_record_path, class: "btn btn-default" %>
+  </div>
+<% end %>
 
 <table class="enacters_hours table">
   <caption><%= @user.full_name %></caption>
@@ -20,10 +24,11 @@
       <th>Actividad</th>
       <th>Horas trabajadas</th>
       <th>Descripción</th>
+      <th></th>
     </tr>
     <% @hour_records_month.each do |month, hour_records| %>
       <tr class="info">
-        <th colspan="6"><%= month.present? ? month.strftime("%B %Y") : "Registros sin fecha" %></th>
+        <th colspan="7"><%= month.present? ? month.strftime("%B %Y") : "Registros sin fecha" %></th>
       </tr>
       <% hour_records.each do |hour_record| %>
         <tr>
@@ -33,10 +38,18 @@
           <td><%= hour_record.activity.present? ? hour_record.activity.name : "" %></td>
           <td><%= hour_record.worked_hours_dec.to_f %></td>
           <td><%= hour_record.description %></td>
+          <% if @user == current_user %>
+            <td style="white-space: nowrap;">
+              <%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_hour_record_path(hour_record), style: "color:black" %>&nbsp;&nbsp;
+              <%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, hour_record, method: :delete, data: { confirm: "¿Estás seguro de querer eliminar este registro?" }, style: "color:black" %>&nbsp;&nbsp;
+            </td>
+          <% else %>
+            <td></td>
+          <% end %>
         </tr>
       <% end %>
       <tr>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
         <td><b>Total: </b></td>
         <td><b><%= hour_records.sum(&:worked_hours_dec) %></b></td>
         <td></td>
