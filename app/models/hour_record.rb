@@ -15,4 +15,9 @@ class HourRecord < ActiveRecord::Base
       nil
     end
   end
+
+  def editable?
+    return false if worked_date.blank?
+    worked_date > 6.days.ago
+  end
 end

@@ -38,7 +38,7 @@
           <td><%= hour_record.activity.present? ? hour_record.activity.name : "" %></td>
           <td><%= hour_record.worked_hours_dec.to_f %></td>
           <td><%= hour_record.description %></td>
-          <% if @user == current_user %>
+          <% if @user == current_user and hour_record.editable? %>
             <td style="white-space: nowrap;">
               <%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_hour_record_path(hour_record), style: "color:black" %>&nbsp;&nbsp;
               <%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, hour_record, method: :delete, data: { confirm: "¿Estás seguro de querer eliminar este registro?" }, style: "color:black" %>&nbsp;&nbsp;
@@ -48,6 +48,7 @@
           <% end %>
         </tr>
       <% end %>
+
       <tr>
         <td colspan="4"></td>
         <td><b>Total: </b></td>
