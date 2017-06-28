@@ -17,7 +17,6 @@ class HourRecord < ActiveRecord::Base
   end
 
   def editable?
-    return true # Borrar esta línea cuando se empiece a restringir el registro de horas de más de 5 días
     return false if worked_date.blank?
     worked_date > 6.days.ago
   end
