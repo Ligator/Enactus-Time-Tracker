@@ -1,4 +1,4 @@
-<% 
+<%
   format_xls "table.enacters_hours" do
     workbook use_autowidth: true
     format "th", b: true # bold
@@ -30,13 +30,13 @@
     </tr>
     <% @hour_records_month.each do |month, hour_records| %>
       <tr class="info">
-        <th><%= month.present? ? month.strftime("%B %Y") : "Registros sin fecha" %></th>
+        <th><%= month.present? ? l(month, format: :month_year).to_s.capitalize : "Registros sin fecha" %></th>
         <th></th><th></th><th></th><th></th><th></th>
       </tr>
       <% hour_records.each do |hour_record| %>
         <tr>
           <td></td>
-          <td><%= hour_record.worked_date.present? ? hour_record.worked_date.strftime("%e %B, %Y") : "" %></td>
+          <td><%= hour_record.worked_date.present? ? l(hour_record.worked_date, format: :day_month_year) : "" %></td>
           <td><%= hour_record.project.present? ? hour_record.project.name : "General" %></td>
           <td><%= hour_record.activity.present? ? hour_record.activity.name : "" %></td>
           <td><%= hour_record.worked_hours_dec.to_f %></td>
