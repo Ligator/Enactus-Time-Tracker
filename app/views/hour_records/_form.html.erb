@@ -38,6 +38,7 @@
   </div>
 <% end %>
 
+<!-- # Descomentar la línea JS cuando se empiece a restringir el registro de horas de más de 5 días -->
 <script type="text/javascript">
   ( function( factory ) {
     if ( typeof define === "function" && define.amd ) {
@@ -70,7 +71,7 @@
 
   $(function () {
     $("#hour_record_worked_date").datepicker({
-      minDate: -5,
+      // minDate: -5,
       changeMonth: true,
       changeYear: true,
       dateFormat: "d MM, yy"
