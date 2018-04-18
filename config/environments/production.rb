@@ -77,8 +77,8 @@ Rails.application.configure do
     domain:               "gmail.com",
     user_name:            ENV["ENACTUS_EMAIL"],
     password:             ENV["ENACTUS_PASSWORD"],
-    # authentication:       "plain",
-    authentication:       :login,
+    authentication:       "plain",
+    # authentication:       :login,
     enable_starttls_auto: true,
     openssl_verify_mode:  'none'
   }
