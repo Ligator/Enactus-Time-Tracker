@@ -80,7 +80,7 @@ Rails.application.configure do
     authentication:       "plain",
     # authentication:       :login,
     enable_starttls_auto: true,
-    openssl_verify_mode:  'none'
+    # openssl_verify_mode:  'none'
   }
 
   # config.action_mailer.smtp_settings = {
