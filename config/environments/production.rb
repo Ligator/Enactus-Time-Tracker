@@ -71,16 +71,29 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'enactusutm.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              "smtp.zoho.com",
+    address:              "smtp.gmail.com",
     port:                 587,
     # port:                 465,
-    domain:               "enactusutm.org",
+    domain:               "gmail.com",
     user_name:            ENV["ENACTUS_EMAIL"],
     password:             ENV["ENACTUS_PASSWORD"],
-    authentication:       "plain",
+    # authentication:       "plain",
+    authentication:       :login,
     enable_starttls_auto: true,
     openssl_verify_mode:  'none'
   }
+
+  # config.action_mailer.smtp_settings = {
+  #   address:              "smtp.zoho.com",
+  #   port:                 587,
+  #   # port:                 465,
+  #   domain:               "enactusutm.org",
+  #   user_name:            ENV["ENACTUS_EMAIL"],
+  #   password:             ENV["ENACTUS_PASSWORD"],
+  #   authentication:       "plain",
+  #   enable_starttls_auto: true,
+  #   openssl_verify_mode:  'none'
+  # }
 
 
   # config.action_mailer.delivery_method = :sendmail
